@@ -1,8 +1,8 @@
 function browseDates(dest, source, out, inb){
     var unirest = require("unirest");
-
+    console.log(dest); 
     var req = unirest("GET", "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsedates/v1.0/US/USD/en-US/"+ source+"/"+ dest+"/" + out);
-
+    console.log("working"); 
     req.query({
         "inboundpartialdate": inb
     });
