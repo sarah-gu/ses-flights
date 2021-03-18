@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/sarah-gu/ses-flights#readme",
   "dependencies": {
-    "unirest": "^0.6.0"
+    "unirest": "^0.6.0",
     "express": "^4.17.1",
     "hbs": "^4.1.1",
     "http": "0.0.1-security",
