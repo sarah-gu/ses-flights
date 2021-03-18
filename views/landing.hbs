@@ -46,11 +46,12 @@
                     }
                     else{
                         var pack = browseDates(dest,orig,out,inb); 
+                        console.log(pack); 
                         $('#destination').val(''); 
                         $('#origin').val(''); 
                         $('#outbound').val(''); 
                         $('#inbound').val(''); 
-
+                        document.getElementById('displayflight').innerText = pack; 
                     }
 
                 });
