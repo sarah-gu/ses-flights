@@ -1,4 +1,5 @@
 var express = require('express');
+var unirest = require('unirest'); 
 var app = express();
 var path = require('path');
 var hbs = require('hbs');
@@ -8,6 +9,10 @@ var io = require('socket.io')(http)
 // -------------- express initialization -------------- //
 app.set('port', process.env.PORT || 8080 );
 app.set('view engine', 'hbs');
+
+//---------------skyscanner session ---------------//
+
+
 
 // -------------- serve static folders -------------- //
 app.use('/client', express.static(path.join(__dirname, 'client')))
