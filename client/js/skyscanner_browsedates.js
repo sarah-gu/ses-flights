@@ -1,10 +1,10 @@
-function browseDates(){
+function browseDates(dest, source, out, inb){
     var unirest = require("unirest");
 
-    var req = unirest("GET", "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsedates/v1.0/US/USD/en-US/SFO-sky/LAX-sky/2021-09-01");
+    var req = unirest("GET", "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsedates/v1.0/US/USD/en-US/"+ source+"/"+ dest+"/" + out);
 
     req.query({
-        "inboundpartialdate": "2021-12-01"
+        "inboundpartialdate": inb
     });
 
     req.headers({
@@ -18,6 +18,8 @@ function browseDates(){
         if (res.error) throw new Error(res.error);
 
         console.log(res.body);
+        return res.body; 
     });
+
 
 }
