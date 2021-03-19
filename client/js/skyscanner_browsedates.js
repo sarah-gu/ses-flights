@@ -1,48 +1,41 @@
-function browseDates(dest, source, out, inb){
-    var unirest = require("unirest");
-    console.log(dest); 
-    response = unirest.post("https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/pricing/v1.0",
-      headers={
-        "X-RapidAPI-Host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
-        "X-RapidAPI-Key": "30ab466ff2msh071da4b43ba287dp1340ccjsn11eedacfad45",
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      params={
-        "inboundDate": "2021-09-10",
-        "cabinClass": "business",
-        "children": 0,
-        "infants": 0,
-        "country": "US",
-        "currency": "USD",
-        "locale": "en-US",
-        "originPlace": "SFO-sky",
-        "destinationPlace": "LHR-sky",
-        "outboundDate": "2021-09-01",
-        "adults": 1
-      }
-    )
+function browsedates(destination, origin, out, inb){
+    var userMarket = "US";
+    var currency = "USD"; 
+    var locale = "en-US"; 
+    var destiration = destination; 
 
-    var req = unirest("GET", "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsedates/v1.0/US/USD/en-US/"+ source+"/"+ dest+"/" + out);
-    console.log("working"); 
-    req.query({
-        "inboundpartialdate": inb
+    var departureDate = out; 
+    var returnDate = inb; 
+
+    var queryString = userMarket + '/' + currency + '/' + locale + '/' +
+                 origin + '/' + destiration + '/' + departureDate + '/' + returnDate;
+    unirest.get("https://skyscanner-skyscanner-flight-search-v1.p.mashape.com/apiservices/browsequotes/v1.0/" + queryString).header("x-rapidapi-key": "30ab466ff2msh071da4b43ba287dp1340ccjsn11eedacfad45").header("x-rapidapi-host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com").end(function(result) {
+        result.body.Quotes.forEach(q=>printFlightSearchResult(q, result.body))
     });
-
-    req.headers({
-        "x-rapidapi-key": "30ab466ff2msh071da4b43ba287dp1340ccjsn11eedacfad45",
-        "x-rapidapi-host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
-        "useQueryString": true
-    });
-
-
-    req.end(function (res) {
-        if (res.error) throw new Error(res.error);
-
-        console.log(res.body);
-        return res.body; 
-    });
-
-
 }
 
-
+function printFlightSearchResult( quote, apiResponse)
+{
+   var places = apiResponse.Places;
+   var carriers = apiResponse.Carriers;
+   var origOut = places.find(p => p.PlaceId == quote.OutboundLeg.OriginId);
+   var destOut = places.find(p => p.PlaceId == quote.OutboundLeg.DestinationId);
+  
+   var retOrig = places.find(p => p.PlaceId == quote.InboundLeg.OriginId);
+   var retDest = places.find(p => p.PlaceId == quote.InboundLeg.DestinationId);
+   var oneWayCarrier = carriers.find(c => c.CarrierId == quote.OutboundLeg.CarrierIds[0]);
+   var returnCarrier = carriers.find(c => c.CarrierId == quote.InboundLeg.CarrierIds[0]);
+   console.log(`The cheapest ${quote.Direct ? "" : "in"}direct flight is
+   on ${quote.OutboundLeg.DepartureDate}
+   from ${origOut.CityName} (${origOut.IataCode} - ${origOut.Name}) ` +
+   `to ${destOut.CityName} (${destOut.IataCode} - ${destOut.Name})
+   operated by ${oneWayCarrier.Name}
+   and returning
+  
+   on ${quote.InboundLeg.DepartureDate}
+   from ${retOrig.CityName} (${retOrig.IataCode} - ${retOrig.Name}) `+
+   `to ${retDest.CityName} (${retDest.IataCode} - ${retDest.Name})
+   operated by ${returnCarrier.Name}
+   will cost you ${quote.MinPrice} ${apiResponse.Currencies[0].Code}
+   `);
+}
