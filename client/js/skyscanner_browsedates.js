@@ -9,7 +9,7 @@ function browsedates(destination, origin, out, inb){
 
     var queryString = userMarket + '/' + currency + '/' + locale + '/' +
                  origin + '/' + destiration + '/' + departureDate + '/' + returnDate;
-    unirest.get("https://skyscanner-skyscanner-flight-search-v1.p.mashape.com/apiservices/browsequotes/v1.0/" + queryString).header("x-rapidapi-key": "30ab466ff2msh071da4b43ba287dp1340ccjsn11eedacfad45").header("x-rapidapi-host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com").end(function(result) {
+    unirest.get("https://skyscanner-skyscanner-flight-search-v1.p.mashape.com/apiservices/browsequotes/v1.0/" + queryString).header("x-rapidapi-key": "30ab466ff2msh071da4b43ba287dp1340ccjsn11eedacfad45").header("x-rapidapi-host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com").end(function (result) {
         result.body.Quotes.forEach(q=>printFlightSearchResult(q, result.body))
     });
 }
