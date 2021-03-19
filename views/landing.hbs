@@ -22,8 +22,8 @@
                     <input style ="height:70px; width: 160px; font-size: 15px; display: inline-block; vertical-align:middle" type="text" id = "destination" name = "destination" placeholder="Destination">
                     <input style ="height:70px; width: 160px; font-size: 15px; display: inline-block; vertical-align:middle" type="text" id = "origin" name = "origin" placeholder="Origin">
 
-                    <input style ="height:70px; width: 160px; font-size: 15px; display: inline-block; vertical-align:middle" type="text" id = "outbound" name = "outbound" placeholder="Outbound yyyy/mm/dd">
-                    <input style ="height:70px; width: 160px; font-size: 15px; display: inline-block; vertical-align:middle" type="text" id = "inbound" name = "inbound" placeholder="Inbound yyyy/mm/dd">
+                    <input style ="height:70px; width: 160px; font-size: 15px; display: inline-block; vertical-align:middle" type="text" id = "outbound" name = "outbound" placeholder="Outbound yyyy-mm-dd">
+                    <input style ="height:70px; width: 160px; font-size: 15px; display: inline-block; vertical-align:middle" type="text" id = "inbound" name = "inbound" placeholder="Inbound yyyy-mm-dd">
                     <input class="btn-lg btn btn-primary" style = "height: 70px; width: 155px; font-size:20px; vertical-align: middle" type="submit"  value="Show Flights"><br>
                 </form>
                 <br><br>
@@ -45,7 +45,13 @@
                         alert('Not all fields filled out!'); 
                     }
                     else{
-                        var pack = browseDates(dest,orig,out,inb); 
+                        var pack = "API Query Failed :("; 
+                        $('#destination').val(''); 
+                        $('#origin').val(''); 
+                        $('#outbound').val(''); 
+                        $('#inbound').val(''); 
+ 
+                       // var pack = browseDates(dest,orig,out,inb); 
                         console.log(pack); 
                        document.getElementById('displayflight').innerText = pack; 
                     }
