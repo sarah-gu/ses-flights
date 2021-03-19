@@ -1,4 +1,5 @@
 function browsedates(destination, origin, out, inb){
+    console.log("HIIIIIIIJADL:SKJASLFH");
     var userMarket = "US";
     var currency = "USD"; 
     var locale = "en-US"; 
