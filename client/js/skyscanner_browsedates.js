@@ -4,7 +4,7 @@ function browseDates(dest, source, out, inb){
     response = unirest.post("https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/pricing/v1.0",
       headers={
         "X-RapidAPI-Host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
-        "X-RapidAPI-Key": "SIGN-UP-FOR-KEY",
+        "X-RapidAPI-Key": "30ab466ff2msh071da4b43ba287dp1340ccjsn11eedacfad45",
         "Content-Type": "application/x-www-form-urlencoded"
       },
       params={
@@ -44,3 +44,5 @@ function browseDates(dest, source, out, inb){
 
 
 }
+
+
